@@ -1,0 +1,260 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Atropos Task Manager API",
+        "version": "0.1.0"
+    },
+    "tags": [
+        {
+            "name": "Task Management"
+        }
+    ],
+    "paths": {
+        "/tasks": {
+            "post": {
+                "summary": "Create a new task (i.e., start a Glue job).",
+                "operationId": "post_/tasks",
+                "description": "",
+                "tags": [
+                    "Task Management"
+                ],
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/c20018f.CreateTaskResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/6a07bef.ValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/c20018f.CreateTaskRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{task_id}/result": {
+            "get": {
+                "summary": "Get the task result.",
+                "operationId": "get_/tasks/{task_id}/result",
+                "description": "",
+                "tags": [
+                    "Task Management"
+                ],
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/c20018f.TaskResultResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/6a07bef.ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{task_id}/status": {
+            "get": {
+                "summary": "Get the task status.",
+                "operationId": "get_/tasks/{task_id}/status",
+                "description": "",
+                "tags": [
+                    "Task Management"
+                ],
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/c20018f.TaskStatusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/6a07bef.ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "c20018f.CreateTaskRequest": {
+                "title": "CreateTaskRequest",
+                "type": "object",
+                "properties": {
+                    "job_name": {
+                        "$ref": "#/components/schemas/c20018f.CreateTaskRequest.JobNameEnum"
+                    }
+                },
+                "required": [
+                    "job_name"
+                ]
+            },
+            "c20018f.CreateTaskResponse": {
+                "title": "CreateTaskResponse",
+                "type": "object",
+                "properties": {
+                    "task_id": {
+                        "title": "Task Id",
+                        "type": "string"
+                    },
+                    "job_run_id": {
+                        "title": "Job Run Id",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "task_id",
+                    "job_run_id"
+                ]
+            },
+            "6a07bef.ValidationError": {
+                "title": "ValidationError",
+                "description": "Model of a validation error response.",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/6a07bef.ValidationError.ValidationErrorElement"
+                }
+            },
+            "c20018f.TaskResultResponse": {
+                "title": "TaskResultResponse",
+                "type": "object",
+                "properties": {
+                    "task_id": {
+                        "title": "Task Id",
+                        "type": "string"
+                    },
+                    "result": {
+                        "title": "Result",
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "task_id",
+                    "result"
+                ]
+            },
+            "c20018f.TaskStatusResponse": {
+                "title": "TaskStatusResponse",
+                "type": "object",
+                "properties": {
+                    "task_id": {
+                        "title": "Task Id",
+                        "type": "string"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "task_id",
+                    "status"
+                ]
+            },
+            "c20018f.CreateTaskRequest.JobNameEnum": {
+                "title": "JobNameEnum",
+                "description": "An enumeration.",
+                "enum": [
+                    "evidence"
+                ],
+                "type": "string"
+            },
+            "6a07bef.ValidationError.ValidationErrorElement": {
+                "title": "ValidationErrorElement",
+                "description": "Model of a validation error response element.",
+                "type": "object",
+                "properties": {
+                    "loc": {
+                        "title": "Missing field name",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "msg": {
+                        "title": "Error message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error type",
+                        "type": "string"
+                    },
+                    "ctx": {
+                        "title": "Error context",
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ]
+            }
+        }
+    },
+    "security": []
+}
