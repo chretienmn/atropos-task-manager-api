@@ -24,7 +24,7 @@ This API manages long-running tasks using AWS Glue, built using the Falcon frame
 
 ```bash
 git clone https://github.com/chretienmn/atropos-task-manager-api.git
-cd falcon-aws-glue-api
+cd atropos-task-manager-api
 ```
 
 #### 2. Set Up Virtual Environment
@@ -86,19 +86,24 @@ This will automatically discover and run all tests in the project.
 
 To run the service inside a Docker container, follow the steps below:
 
-#### 1. Build the Docker Image
+#### First option: Build the Docker Image
 
-In the project directory, build the Docker image using the provided `Dockerfile`:
+Build the Docker image using the provided Dockerfile and run it, exposing the app on port 8000:
+
 ```bash
 docker build -t task-manager-api .
-```
-
-#### 2. Run the Docker Container
-
-Once the image is built, run the container, exposing the app on port 8000:
-```bash
 docker run -d -p 8000:8000 task-manager-api
 ```
+
+#### Second option: Pull from Docker Hub
+
+Once logged in, pull the Docker container from Docker hub and run it, exposing the app on port 8000:
+
+```bash
+docker pull chretienmn/atropos-task-manager-api:latest
+docker run -d -p 8000:8000 chretienmn/atropos-task-manager-api
+```
+
 Now the API will be available at `http://localhost:8000` in your browser.
 
 
